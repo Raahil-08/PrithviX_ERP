@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 class PrithvixAPITester:
-    def __init__(self, base_url="https://60380638-0d31-4698-a619-638b83c6b02a.preview.emergentagent.com"):
+    def __init__(self, base_url="https://prithvix-dealer.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0
