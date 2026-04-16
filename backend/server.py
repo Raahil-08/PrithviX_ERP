@@ -31,6 +31,7 @@ app.add_middleware(
 SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 sb = create_client(SUPABASE_URL, SUPABASE_KEY)
+AUTH_DISABLED = os.environ.get("AUTH_DISABLED", "true").lower() not in ("0", "false", "no")
 
 # JWT
 JWT_ALGORITHM = "HS256"
@@ -52,6 +53,15 @@ def create_refresh_token(user_id: str) -> str:
     return pyjwt.encode(payload, get_jwt_secret(), algorithm=JWT_ALGORITHM)
 
 async def get_current_user(request: Request) -> dict:
+    if AUTH_DISABLED:
+        return {
+            "id": "dev-user",
+            "name": "Prithvix Team",
+            "email": "dev@prithvix.local",
+            "username": "dev",
+            "role": "dealer",
+        }
+
     token = request.cookies.get("access_token")
     if not token:
         auth_header = request.headers.get("Authorization", "")
@@ -105,6 +115,16 @@ class FarmerNoteRequest(BaseModel):
 
 @app.post("/api/auth/login")
 async def login(req: LoginRequest, response: Response):
+    if AUTH_DISABLED:
+        return {
+            "id": "dev-user",
+            "name": "Prithvix Team",
+            "email": "dev@prithvix.local",
+            "username": "dev",
+            "role": "dealer",
+            "token": "dev-session",
+        }
+
     user = None
     if req.email:
         r = sb.table("users").select("*").eq("email", req.email.lower().strip()).execute()
@@ -434,32 +454,6 @@ async def get_subscription(request: Request):
 # ========================= SEED DATA =========================
 
 def seed_data():
-    dealer_email = os.environ.get("ADMIN_EMAIL", "dealer@prithvix.com")
-    dealer_pass = os.environ.get("ADMIN_PASSWORD", "dealer123")
-    staff_user = os.environ.get("STAFF_USERNAME", "staff01")
-    staff_pass = os.environ.get("STAFF_PASSWORD", "staff123")
-
-    # Seed dealer
-    r = sb.table("users").select("id,password_hash").eq("email", dealer_email).execute()
-    if not r.data:
-        sb.table("users").insert({
-            "email": dealer_email, "password_hash": hash_password(dealer_pass),
-            "name": "Rajesh Patel", "role": "dealer", "phone": "+91 98765 43210",
-            "shop_name": "Patel Agri Center", "location": "Nashik, Maharashtra",
-        }).execute()
-    elif not verify_password(dealer_pass, r.data[0]["password_hash"]):
-        sb.table("users").update({"password_hash": hash_password(dealer_pass)}).eq("email", dealer_email).execute()
-
-    # Seed staff
-    r = sb.table("users").select("id,password_hash").eq("username", staff_user).execute()
-    if not r.data:
-        sb.table("users").insert({
-            "username": staff_user, "password_hash": hash_password(staff_pass),
-            "name": "Amit Kumar", "role": "staff", "phone": "+91 87654 32109",
-        }).execute()
-    elif not verify_password(staff_pass, r.data[0]["password_hash"]):
-        sb.table("users").update({"password_hash": hash_password(staff_pass)}).eq("username", staff_user).execute()
-
     # Seed farmers
     r = sb.table("farmers").select("id", count="exact").execute()
     if r.count == 0:
@@ -567,16 +561,6 @@ def seed_data():
             {"month": "Nov", "count": 79}, {"month": "Dec", "count": 88},
         ]
         sb.table("farmer_growth").insert(growth).execute()
-
-    # Write test credentials
-    os.makedirs("/app/memory", exist_ok=True)
-    with open("/app/memory/test_credentials.md", "w") as f:
-        f.write("# Test Credentials\n\n")
-        f.write("## Dealer Login\n")
-        f.write(f"- Email: {dealer_email}\n- Password: {dealer_pass}\n- Role: dealer\n\n")
-        f.write("## Staff Login\n")
-        f.write(f"- Username: {staff_user}\n- Password: {staff_pass}\n- Role: staff\n\n")
-        f.write("## Auth Endpoints\n- POST /api/auth/login\n- GET /api/auth/me\n- POST /api/auth/logout\n")
 
 @app.on_event("startup")
 async def startup():

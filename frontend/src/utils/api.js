@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+const authDisabled = String(process.env.REACT_APP_AUTH_DISABLED || '').toLowerCase() !== 'false';
+const defaultBaseURL = process.env.NODE_ENV === 'development'
+  ? 'http://127.0.0.1:8000'
+  : '/_/backend';
+
 const api = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL || '',
+  baseURL: process.env.REACT_APP_BACKEND_URL || defaultBaseURL,
   headers: { 'Content-Type': 'application/json' }
 });
 
@@ -18,7 +23,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    if (!authDisabled && error.response?.status === 401) {
       localStorage.removeItem('prithvix_token');
       localStorage.removeItem('prithvix_user');
       if (window.location.pathname !== '/login') {
