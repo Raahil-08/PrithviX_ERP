@@ -56,8 +56,8 @@ PrithviX ERP is a full-stack agri-dealer management system for rural agricultura
 2. Open SQL Editor in Supabase.
 3. Run the migration from `supabase_migration.sql`.
 4. Copy these values from Supabase Project Settings -> API:
-	 - Project URL
-	 - service_role key
+   - Project URL
+   - service_role key
 
 ## 2. Configure Backend Environment
 
@@ -77,6 +77,7 @@ STAFF_PASSWORD=staff123
 ```
 
 Notes:
+
 - `SUPABASE_SERVICE_KEY` is required by backend server-side queries.
 - Seed users are created/updated at backend startup.
 
@@ -121,11 +122,11 @@ http://localhost:3000
 ## Default Login Credentials (Seeded)
 
 - Dealer:
-	- Email: `dealer@prithvix.com`
-	- Password: `dealer123`
+  - Email: `dealer@prithvix.com`
+  - Password: `dealer123`
 - Staff:
-	- Username: `staff01`
-	- Password: `staff123`
+  - Username: `staff01`
+  - Password: `staff123`
 
 ## Optional API Smoke Test
 
@@ -140,13 +141,13 @@ This script validates core health, auth, dashboard, farmers, inventory, credit, 
 ## Common Local Issues
 
 - `SUPABASE_URL` or key missing:
-	- Backend fails at startup because these are mandatory.
+  - Backend fails at startup because these are mandatory.
 - CORS issues:
-	- Ensure `FRONTEND_URL` in `backend/.env` matches the frontend origin.
+  - Ensure `FRONTEND_URL` in `backend/.env` matches the frontend origin.
 - Frontend cannot call API:
-	- Ensure `REACT_APP_BACKEND_URL` is set and backend runs on that URL.
+  - Ensure `REACT_APP_BACKEND_URL` is set and backend runs on that URL.
 - Port already in use:
-	- Change ports or stop the process using 3000/8000.
+  - Change ports or stop the process using 3000/8000.
 
 ## Current Status
 
