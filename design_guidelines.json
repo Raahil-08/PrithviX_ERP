@@ -1,0 +1,129 @@
+{
+  "theme_archetype": "Archetype 1: Organic & Earthy",
+  "default_mode": "light",
+  "global_vibe": "Premium agri-enterprise, trustworthy, grounded, functional yet editorial.",
+  "colors": {
+    "light": {
+      "background": "#F5F0E8",
+      "surface": "#FFFFFF",
+      "surface_secondary": "#EAE5DC",
+      "primary": "#1A3C2B",
+      "primary_hover": "#142F21",
+      "accent": "#D4A853",
+      "accent_hover": "#B88E3B",
+      "text_primary": "#0E1A14",
+      "text_secondary": "#4A5D52",
+      "border": "#D8D3CB",
+      "error": "#D35400",
+      "success": "#2E7D32"
+    },
+    "dark": {
+      "background": "#0E1A14",
+      "surface": "#14251D",
+      "surface_secondary": "#1E362A",
+      "primary": "#1A3C2B",
+      "primary_hover": "#24523B",
+      "accent": "#D4A853",
+      "accent_hover": "#F0C775",
+      "text_primary": "#F5F0E8",
+      "text_secondary": "#A0B0A7",
+      "border": "#2B4738",
+      "error": "#FF7A59",
+      "success": "#4CAF50"
+    }
+  },
+  "typography": {
+    "headings": {
+      "family": "DM Serif Display",
+      "style": "font-serif tracking-tight text-[#1A3C2B] dark:text-[#F5F0E8]",
+      "sizes": {
+        "h1": "text-4xl sm:text-5xl lg:text-6xl",
+        "h2": "text-2xl sm:text-3xl lg:text-4xl",
+        "h3": "text-xl sm:text-2xl",
+        "h4": "text-lg sm:text-xl"
+      }
+    },
+    "body": {
+      "family": "Plus Jakarta Sans",
+      "style": "font-sans leading-relaxed text-[#0E1A14] dark:text-[#F5F0E8]",
+      "sizes": {
+        "large": "text-lg",
+        "default": "text-base",
+        "small": "text-sm",
+        "micro": "text-xs tracking-wider uppercase"
+      }
+    }
+  },
+  "layout_spacing": {
+    "philosophy": "Generous spacing. Containers with borders must have internal padding (p-6 or p-8).",
+    "dashboard_grid": "Control Room layout: grid-cols-1 md:grid-cols-3 lg:grid-cols-4 with gap-6. Dense data alignment.",
+    "sidebar": "Collapsible left sidebar for navigation, saving horizontal space for complex tables.",
+    "borders_and_shadows": "Flat surfaces with 1px crisp borders. Avoid heavy shadows. Use soft, diffuse shadow-sm for active elements."
+  },
+  "component_guidelines": {
+    "tables": "Use Shadcn tables. Left-align data. Add generous p-4 to cells. Sticky header for scrollability.",
+    "cards": "Cardless look where possible or flat rectangular cards with 1px border. No excessive border-radius (max rounded-lg).",
+    "buttons": "Primary buttons: Dark Green (#1A3C2B). Action/Accent buttons: Gold (#D4A853). Ensure 3:1 contrast minimum.",
+    "forms": "Shadcn inputs. Left-aligned labels. Generous spacing between groups.",
+    "alerts": "Overdue Credit Alert Banner should use a muted terracotta/error tone, sticky at the top of the dashboard."
+  },
+  "interactions_and_motion": {
+    "hover": "Subtle -translate-y-px and slight darkening of border/background. ALWAYS explicitly set hover text colors.",
+    "transitions": "Use specific properties: transition-colors duration-200, or transition-transform for scaling.",
+    "drawers": "Use slide-over drawers (Shadcn Sheet) for Farmer Detail and Add Product forms to preserve context without navigating away."
+  },
+  "testing": {
+    "requirements": "All interactive elements MUST include data-testid. Examples: data-testid='login-submit-btn', data-testid='farmer-filter-input', data-testid='add-product-modal-trigger'."
+  },
+  "media": {
+    "images": {
+      "login_hero_background": {
+        "url": "https://images.unsplash.com/photo-1759155895472-c4fd4716b158?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxhZ3JpY3VsdHVyZSUyMGZpZWxkJTIwb3JnYW5pYyUyMGxhbmRzY2FwZXxlbnwwfHx8fDE3NzYzNDgzNDR8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Dense field of vibrant green grass for login split screen",
+        "usage": "Background image for the non-form half of the login screen. Requires a gradient overlay (bg-black/30) if text is placed on top."
+      },
+      "farmer_avatars": [
+        {
+          "url": "https://images.unsplash.com/photo-1614025000673-edf238aaf5d4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwyfHxJbmRpYW4lMjBmYXJtZXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NzYzNDgzNDR8MA&ixlib=rb-4.1.0&q=85",
+          "description": "Indian woman farmer"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1606203452426-f5af98e6f96e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwxfHxJbmRpYW4lMjBmYXJtZXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NzYzNDgzNDR8MA&ixlib=rb-4.1.0&q=85",
+          "description": "Indian man farmer"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1609252509102-aa73ff792667?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwzfHxJbmRpYW4lMjBmYXJtZXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NzYzNDgzNDR8MA&ixlib=rb-4.1.0&q=85",
+          "description": "Indian man farmer with eyeglasses"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1632923057240-b6775e4db748?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHw0fHxmYXJtZXIlMjBwb3J0cmFpdCUyMG9yZ2FuaWN8ZW58MHx8fHwxNzc2MzQ4MzM2fDA&ixlib=rb-4.1.0&q=85",
+          "description": "Farmer with hat"
+        }
+      ],
+      "inventory_placeholders": [
+        {
+          "url": "https://images.unsplash.com/photo-1759411364609-aeb30eb034e4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzV8MHwxfHNlYXJjaHwxfHxhZ3JpY3VsdHVyZSUyMGZlcnRpbGl6ZXIlMjBiYWd8ZW58MHx8fHwxNzc2MzQ4MzQ0fDA&ixlib=rb-4.1.0&q=85",
+          "description": "Men loading sacks (Fertilizer)"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1719532520316-4cc0d8886ab7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzV8MHwxfHNlYXJjaHwzfHxhZ3JpY3VsdHVyZSUyMGZlcnRpbGl6ZXIlMjBiYWd8ZW58MHx8fHwxNzc2MzQ4MzQ0fDA&ixlib=rb-4.1.0&q=85",
+          "description": "Bags of supplies"
+        }
+      ],
+      "map_texture": {
+        "url": "https://images.unsplash.com/photo-1599424054772-1d788ce34387?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwyfHxncmVlbiUyMGxlYWYlMjBwYXR0ZXJufGVufDB8fHx8MTc3NjM0ODM0NHww&ixlib=rb-4.1.0&q=85",
+        "description": "Green fern pattern",
+        "usage": "Can be used as a subtle background pattern for AI chat empty states or Settings page headers"
+      }
+    }
+  },
+  "instructions_to_main_agent": [
+    "Install and use 'lucide-react' for all dashboard icons.",
+    "Use 'recharts' for Analytics (Line/Bar/Donut) as they look great with custom themes.",
+    "Use 'react-leaflet' for the map view on the geographic activity section.",
+    "Prioritize 'Plus Jakarta Sans' for the primary UI. Only use 'DM Serif Display' for large titles, the login screen, or major section headers.",
+    "The overdue credit alert must be highly visible but elegant (use the terracotta error color subtly with strong typography).",
+    "Keep standard pages cardless. Just pure grids and subtle outlines.",
+    "Ensure all theme toggles properly invert the specific color palette outlined in these guidelines."
+  ]
+}
