@@ -14,6 +14,7 @@ from pydantic import BaseModel
 from supabase import create_client
 
 app = FastAPI(title="Prithvix ERP API")
+RUNNING_ON_VERCEL = os.environ.get("VERCEL") == "1"
 
 allowed_origins = [
     os.environ.get("FRONTEND_URL", "http://localhost:3000"),
@@ -28,9 +29,30 @@ app.add_middleware(
 )
 
 # Supabase client
-SUPABASE_URL = os.environ["SUPABASE_URL"]
-SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
-sb = create_client(SUPABASE_URL, SUPABASE_KEY)
+class _UnavailableSupabaseTable:
+    def select(self, *args, **kwargs): return self
+    def eq(self, *args, **kwargs): return self
+    def order(self, *args, **kwargs): return self
+    def limit(self, *args, **kwargs): return self
+    def gte(self, *args, **kwargs): return self
+    def or_(self, *args, **kwargs): return self
+    def not_(self, *args, **kwargs): return self
+    def insert(self, *args, **kwargs): return self
+    def update(self, *args, **kwargs): return self
+    def delete(self, *args, **kwargs): return self
+    def single(self): return self
+    def execute(self):
+        raise HTTPException(status_code=503, detail="Supabase is not configured for this deployment")
+
+
+class _UnavailableSupabaseClient:
+    def table(self, *args, **kwargs):
+        return _UnavailableSupabaseTable()
+
+
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
+sb = create_client(SUPABASE_URL, SUPABASE_KEY) if SUPABASE_URL and SUPABASE_KEY else _UnavailableSupabaseClient()
 AUTH_DISABLED = os.environ.get("AUTH_DISABLED", "true").lower() not in ("0", "false", "no")
 
 # JWT
@@ -564,7 +586,9 @@ def seed_data():
 
 @app.on_event("startup")
 async def startup():
-    seed_data()
+    # Vercel serverless functions should stay lean; skip boot-time seeding there.
+    if not RUNNING_ON_VERCEL and SUPABASE_URL and SUPABASE_KEY:
+        seed_data()
 
 @app.get("/api/health")
 async def health():
