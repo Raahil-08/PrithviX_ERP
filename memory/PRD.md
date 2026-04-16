@@ -25,6 +25,10 @@ Build a polished ERP web portal dashboard for Prithvix, an AgriTech dealer manag
 - Dark/light mode toggle
 - Responsive design (375px - 1440px)
 
+## Bug Fixes (April 16, 2026 - Session 2)
+- [x] Fixed login auth failure - switched from cookie-based to Bearer token auth (localStorage)
+- Root cause: Kubernetes ingress proxy overrides CORS `Access-Control-Allow-Origin` to `*`, preventing cookies from being sent with `credentials: include`
+
 ## What's Been Implemented (April 16, 2026)
 - [x] Complete backend API (24+ endpoints, 100% tested)
 - [x] JWT authentication (dealer + staff login)

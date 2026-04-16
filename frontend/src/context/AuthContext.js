@@ -8,10 +8,18 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   const checkAuth = useCallback(async () => {
+    const token = localStorage.getItem('prithvix_token');
+    if (!token) {
+      setUser(false);
+      setLoading(false);
+      return;
+    }
     try {
       const res = await api.get('/api/auth/me');
       setUser(res.data);
     } catch {
+      localStorage.removeItem('prithvix_token');
+      localStorage.removeItem('prithvix_user');
       setUser(false);
     } finally {
       setLoading(false);
@@ -24,12 +32,19 @@ export function AuthProvider({ children }) {
 
   const login = async (credentials) => {
     const res = await api.post('/api/auth/login', credentials);
-    setUser(res.data);
-    return res.data;
+    const data = res.data;
+    localStorage.setItem('prithvix_token', data.token);
+    localStorage.setItem('prithvix_user', JSON.stringify(data));
+    setUser(data);
+    return data;
   };
 
   const logout = async () => {
-    await api.post('/api/auth/logout');
+    try {
+      await api.post('/api/auth/logout');
+    } catch {}
+    localStorage.removeItem('prithvix_token');
+    localStorage.removeItem('prithvix_user');
     setUser(false);
   };
 
