@@ -25,6 +25,13 @@ Build a polished ERP web portal dashboard for Prithvix, an AgriTech dealer manag
 - Dark/light mode toggle
 - Responsive design (375px - 1440px)
 
+## Supabase RLS Security (April 16, 2026 - Session 4)
+- [x] Enabled Row Level Security (RLS) on all 12 tables
+- [x] Forced RLS even for table owners
+- [x] No anon policies created = deny-all for anonymous access
+- [x] Backend (service_role key) bypasses RLS automatically - all endpoints working
+- [x] Verified: anon key returns 0 rows on all tables (data fully protected)
+
 ## Supabase Migration (April 16, 2026 - Session 3)
 - [x] Created 12 Supabase tables (users, farmers, farmer_visits, farmer_notes, credits, payments, inventory, activities, sales_records, farmer_growth, chat_sessions, chat_messages)
 - [x] Migrated all backend queries from MongoDB/motor to Supabase Python client (supabase-py)
